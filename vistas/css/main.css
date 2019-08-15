@@ -1,0 +1,22 @@
+:root{
+    /*colores*/
+    --colorPrimario: #7F25D9;
+    --colorSegundario: #5C12A6;
+    --colorBotones: #F2E205;
+
+    /*fuentes*/
+    --fuenteGeneral: 'Nunito', sans-serif;
+    --fuenteTitulos: 'Mukta', sans-serif;
+
+}
+
+
+html {
+    box-sizing: border-box;
+    font-size: 62.5%; /**reset para rems --62.5% =10px
+    rems unidad de medida para todas las pantallas*/
+  }
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
+  
