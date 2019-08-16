@@ -1,8 +1,8 @@
-:root{
+:root {
     /*colores*/
     --colorPrimario: #7F25D9;
     --colorSegundario: #5C12A6;
-    --colorBotones: #F2E205;
+    --colorBotones: #EAF205;
 
     /*fuentes*/
     --fuenteGeneral: 'Nunito', sans-serif;
@@ -11,12 +11,192 @@
 }
 
 
+
 html {
     box-sizing: border-box;
-    font-size: 62.5%; /**reset para rems --62.5% =10px
+    font-size: 62.5%;
+    /**reset para rems --62.5% =10px
     rems unidad de medida para todas las pantallas*/
-  }
-  *, *:before, *:after {
+}
+
+*,
+*:before,
+*:after {
     box-sizing: inherit;
-  }
-  
+}
+
+
+/*Globales */
+
+.seccion {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+
+.contenedor {
+    margin: 0 auto;
+    width: 95%;
+    max-width: 110rem;
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .contenedor {
+        margin: 0 auto;
+        width: 95%;
+        max-width: 110rem;
+    }
+}
+
+@media (min-width: 1025px) {
+    .contenedor {
+        margin: 0 auto;
+        width: 90%;
+        max-width: 110rem;
+    }
+}
+
+a{
+    text-decoration: none;
+}
+
+h1 {
+    font-family: var(--fuenteTitulos);
+    font-size: 3.8rem;
+    margin: 0;
+    color: white;
+}
+
+h2 {
+    font-family: var(--fuenteTitulos);
+    font-size: 2.2rem;
+    margin: 0;
+}
+
+p {
+    font-family: var(--fuenteGeneral);
+    font-size: 1.6rem;
+    margin: 0;
+}
+
+.centrar-texto {
+    text-align: center;
+}
+
+.btn{
+    display: inline-block;
+    padding:1.5rem 4rem;
+}
+
+
+/*Formulario crear*/
+
+.fondo {
+    background-color: var(--colorSegundario);
+    height: 100vh;
+}
+
+.contenedor-total {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column
+}
+
+.contenedor-formulario {
+    max-width: 63rem;
+    margin-top: 3rem;
+    padding: 3rem;
+    background-color: white;
+    border-radius: 1rem;
+    -webkit-box-shadow: 1px 1px 19px 2px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 1px 1px 19px 2px rgba(0, 0, 0, 0.75);
+    box-shadow: 1px 1px 19px 2px rgba(0, 0, 0, 0.75);
+
+}
+
+
+
+.campo{
+    padding: 2rem 0;
+    display: grid;
+    grid-gap: 1rem;
+    font-family: var(--fuenteGeneral);
+}
+
+.campo label{
+    font-size: 1.5rem;
+}
+
+.campo input{
+    width: 100%;
+    padding: 1.5rem;
+    font-family: var(--fuenteGeneral);
+    font-size: 1.3rem;
+    border-radius: .5rem;
+    border: .1rem solid #555;
+   
+}
+
+input[type=text]:focus,
+input[type=password]:focus{
+    border: .1rem solid rgb(127, 37, 217 ,85) ;
+}
+
+.contenedor-login{
+    margin: 2rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    font-size: 1.5rem;
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .contenedor-login{
+        flex-direction: row-reverse;
+    }
+}
+
+@media (min-width: 1025px){
+    .contenedor-login{
+        flex-direction: row-reverse;
+    }
+}
+
+
+.btn-amarillo{
+    text-transform: uppercase;
+    background-color: var(--colorBotones);
+    margin-bottom: 2rem;
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    
+.btn-amarillo{
+    margin-bottom: 0;
+}
+
+}
+
+@media (min-width: 1025px){
+
+    .btn-amarillo{
+        margin-bottom: 0;
+    }
+}
+
+.inicio-sesion{
+    color: var(--colorPrimario);
+    font-family: var(--fuenteGeneral);
+}
+
+.btn-texto{
+    border: 0.1rem solid var(--colorSegundario);
+}
+
+.create-account{
+    text-transform: uppercase;
+    font-family: var(--fuenteGeneral);
+    color: var(--colorPrimario)
+}
