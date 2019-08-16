@@ -19,9 +19,8 @@
             </div>
 
             <div class="contenedor-login">
-                <div class="btn btn-amarillo">
-                    <a href="#" class="inicio-sesion" >iniciar sesión</a>
-                </div>
+                    <input type="submit" value="iniciar sesión" name="submit" id="submit" class="inicio-sesion btn btn-amarillo">
+               
                 <div class="btn-texto btn">
                     <a href="#" class="create-account" >crea una nueva cuenta</a>
                 </div>
