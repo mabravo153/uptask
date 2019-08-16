@@ -3,6 +3,7 @@
     --colorPrimario: #7F25D9;
     --colorSegundario: #5C12A6;
     --colorBotones: #EAF205;
+    --colorhoverboton: #D9CB04;
 
     /*fuentes*/
     --fuenteGeneral: 'Nunito', sans-serif;
@@ -69,7 +70,13 @@ h1 {
 
 h2 {
     font-family: var(--fuenteTitulos);
-    font-size: 2.2rem;
+    font-size: 3rem;
+    margin: 0;
+}
+
+h3{
+    font-family: var(--fuenteTitulos);
+    font-size: 2.5rem;
     margin: 0;
 }
 
@@ -108,7 +115,7 @@ p {
     margin-top: 3rem;
     padding: 3rem;
     background-color: white;
-    border-radius: 1rem;
+    border-radius: 2rem;
     -webkit-box-shadow: 1px 1px 19px 2px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 1px 1px 19px 2px rgba(0, 0, 0, 0.75);
     box-shadow: 1px 1px 19px 2px rgba(0, 0, 0, 0.75);
@@ -169,7 +176,13 @@ input[type=password]:focus{
     text-transform: uppercase;
     background-color: var(--colorBotones);
     margin-bottom: 2rem;
+    transition: all .2s ease-in-out;
 }
+
+.btn-amarillo:hover{
+    background-color: var(--colorhoverboton);
+}
+
 
 @media (min-width: 768px) and (max-width: 1024px) {
     
@@ -193,10 +206,135 @@ input[type=password]:focus{
 
 .btn-texto{
     border: 0.1rem solid var(--colorSegundario);
+    transition: all .2s ease-in-out;
+}
+
+.btn-texto:hover{
+    border: 0.1rem solid var(--colorhoverboton);
 }
 
 .create-account{
     text-transform: uppercase;
     font-family: var(--fuenteGeneral);
     color: var(--colorPrimario)
+}
+
+/*panel principal*/ 
+
+.barra{
+    background-color: var(--colorSegundario);
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: repeat(2,1fr)
+}
+
+.alinear{
+    text-align: end;
+}
+
+.cerrar-sesion{
+    text-align: end;
+    border: 0.1rem solid var(--colorBotones);
+    transition: all .2s ease-in-out;
+}
+
+.cerrar-sesion:hover{
+    border: 0.1rem solid var(--colorhoverboton);
+}
+
+.btn-cerrar{
+    color:white;
+    font-size: 1.5rem;
+    font-family: var(--fuenteGeneral)
+}
+
+/*seccion principal*/
+
+.seccion-principal{
+    display: grid;
+    grid-template-columns: 20% 80%;
+    height: 100vh;
+}
+
+.proyectos{
+    background-color: var(--colorPrimario);
+ 
+}
+
+.nuevo{
+    text-align: center;
+    margin: 3rem 0;
+}
+
+.nuevo-proyecto{
+    color: var(--colorSegundario);
+    font-family: var(--fuenteGeneral);
+    font-size: 1.5rem;
+}
+
+.encabezado-proyectos{
+    padding: 2rem 0;
+    text-transform: capitalize;
+    color: var(--colorBotones);
+}
+
+.scroll-proyectos{
+    margin-top: 2rem;
+}
+
+.scroll-proyectos a p{
+    padding: 1rem 0;
+    color: white;
+    font-size: 1.8rem;
+    transition: all .2s ease-in-out;
+}
+
+.scroll-proyectos a p:hover{
+    color: var(--colorBotones);
+}
+
+.dashboard{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dashboard h2{
+    padding: 2rem 0;
+}
+
+.agregar-tarea{
+    min-width: 70rem;
+    background-color: var(--colorPrimario);
+    padding: 3rem;
+    border-radius: 2rem;
+}
+
+.listado-tareas{
+    min-width: 70rem;
+    background-color: var(--colorPrimario);
+    padding: 3rem;
+    border-radius: 2rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    color: white;
+}
+
+.iconos{
+    text-align: end;
+    font-size: 2rem;
+}
+.iconos a i{
+    padding-left: 1rem;
+    color: white;
+}
+
+.agregar{
+    color: var(--colorSegundario);
+    font-family: var(--fuenteGeneral);
+}
+
+.flex-agregar{
+    display: flex;
+    justify-content: end;
 }
