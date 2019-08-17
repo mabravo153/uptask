@@ -4,6 +4,11 @@
     --colorSegundario: #5C12A6;
     --colorBotones: #EAF205;
     --colorhoverboton: #D9CB04;
+    --bordeSolido: #5A7302;
+    --bordeFondo:#C1D96C;
+    --rojoBorde: #FF1200;
+    --rojoFondo: #FF5247;
+
 
     /*fuentes*/
     --fuenteGeneral: 'Nunito', sans-serif;
@@ -338,4 +343,30 @@ input[type=password]:focus{
 .flex-agregar{
     display: flex;
     justify-content: end;
+}
+
+
+
+.notificacion{
+    position: fixed;
+    top: 3rem; 
+    left: 3rem;
+    padding: 3rem 5rem; 
+    border-radius: 2rem; 
+    color: white;
+    opacity: 0;
+}
+
+.visible{
+    opacity: 1; 
+}
+
+.correcto {
+    border: 0.1rem solid var(--bordeSolido);
+    background-color: var(--bordeFondo)
+}
+
+.error{
+    border: 0.1rem solid var(--rojoBorde);
+    background-color: var(--rojoFondo);
 }

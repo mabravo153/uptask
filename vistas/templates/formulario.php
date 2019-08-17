@@ -3,6 +3,11 @@
 
 <div class="contenedor-total">
 
+    
+<div class="notificacion">
+    <p>rellena todos los campos</p>
+</div>
+
     <h1 class="centrar-texto">UpTask</h1>
 
     <div class="contenedor-formulario contenedor">
