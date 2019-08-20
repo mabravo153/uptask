@@ -1,64 +1,95 @@
-<?php 
+<?php
 
 
 
 if (isset($_POST['accion'])) {
 
-   /* echo json_encode($_POST);*/
+    //codigo para crear usuarios
+    if ($_POST['accion'] == 'createaccount') {
 
-   
-    if ($_POST['accion'] == 'create') {
-        
         $usuario = filter_var($_POST['usuario'], FILTER_SANITIZE_STRING);
         $contrasenaSana = filter_var($_POST['contrasena'], FILTER_SANITIZE_STRING);
-        $fechaCreacion = $_POST['fecha'];  
+        $fechaCreacion = $_POST['fecha'];
 
+        //crear un hash de contraseña 
         $opciones = array(
             'cost' => 12
         ); //es un array asociatico que denota el costo del hash 
 
-        $contrasena = password_hash($contrasenaSana,PASSWORD_BCRYPT, $opciones);//crear un hash de contraseña 
-        
+        $contrasena = password_hash($contrasenaSana, PASSWORD_BCRYPT, $opciones);
+
 
         try {
-           include_once 'bd-con.php'; 
+            include_once 'bd-con.php';
 
-           $pdo->beginTransaction();
-           $ingresarUsuario = $pdo->prepare(" INSERT INTO usuario (id, nombreUsuario, contresena, fechaCreaccion)
-                                            VALUES (null, :nombreUsuario, :contrasena, fechaCreaccion) ");
+            $pdo->beginTransaction();
+            $ingresarUsuario = $pdo->prepare(" INSERT INTO usuario (nombreUsuario, contrasena, fechaCreaccion)
+                                            VALUES (:nombreUsuario, :contrasena, :fechaCreaccion) ");
 
-            $ingresarUsuario->execute([
-                ':nombreUsuario'=> $usuario,
-                ':contrasena' => $contrasena,
-                ':fechaCreaccion' =>$fechaCreacion
-            ]);
+            $ingresarUsuario->bindParam(':nombreUsuario', $usuario);
+            $ingresarUsuario->bindParam(':contrasena', $contrasena);
+            $ingresarUsuario->bindParam(':fechaCreaccion', $fechaCreacion);
+            $ingresarUsuario->execute();
+
+
+            $respuesta = array(
+                'estado' => 'completado',
+                'error' => $ingresarUsuario->errorInfo()
+            );
 
             $pdo->commit();
 
-            $respuesta = array(
-                'estado'=> 'completado'
-            );
-
+            $ingresarUsuario = null;
+            $pdo = null;
         } catch (\Exception $th) {
 
             $pdo->rollBack();
 
             $respuesta = array(
-                'error' => $th->getMessage()
+                'error' => 'ocurrio un error',
+                'contenido' => $th->getMessage()
             );
-
-          
         }
 
-        echo json_encode($respuesta); 
-
+        echo json_encode($respuesta);
     }
 
 
+    //codigo para loguear usuarios 
+    if ($_POST['accion'] == 'login') {
+
+
+        $usuario = filter_var($_POST['usuario'], FILTER_SANITIZE_STRING);
+        $contrasenaSana = filter_var($_POST['contrasena'], FILTER_SANITIZE_STRING);
+        $fechaCreacion = $_POST['fecha'];
+
+        include_once 'bd-con.php';
+
+        try {
+
+            $pdo->beginTransaction(); //iniciamos transaccion 
+
+            //realizar consulta
+            $busquedaUsuario = $pdo->prepare(" SELECT nombreUsuario, contrasena FROM usuario
+                                            WHERE nombreUsuario=:nombreUsuario ");
+
+            $busquedaUsuario->bindParam(':nombreUsuario', $usuario);
+            $busquedaUsuario->execute();
+
+
+            //loguear usuario 
+
+
+            $pdo->commit();
+        } catch (\Exception $th) {
+            $pdo->rollBack();
+
+            $resultadoLogin = array(
+                'error' => $th->getMessage()
+            );
+        }
+
+
+        echo json_encode($resultadoLogin);
+    }
 }
-
-
-
-
-
-?>

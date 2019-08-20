@@ -11,11 +11,11 @@
 
         //detectar cuando le den submit al formulario
         formulario.addEventListener('submit', validarFormulario)
-        
 
 
 
-        function validarFormulario (e) {
+
+        function validarFormulario(e) {
             e.preventDefault()
 
             let usuario = document.querySelector('#usuario').value,
@@ -29,12 +29,12 @@
 
             } else {
 
-                let creacion = new Date();
+                let fechaCreacion = new Date();
 
                 let crearFormData = new FormData()
                 crearFormData.append('usuario', usuario);
                 crearFormData.append('contrasena', contrasena);
-                crearFormData.append('fecha', creacion)
+                crearFormData.append('fecha', fechaCreacion)
                 crearFormData.append('accion', accion);
 
 
@@ -43,29 +43,55 @@
                     crearUsuario(crearFormData)
                 }
 
-                if(accion == 'login'){
-                 
-                
+                if (accion == 'login') {
+                    verificarUsuario(crearFormData)
                 }
 
 
             }
 
-             function crearUsuario(params) {
-                
+            function crearUsuario(params) {
+
                 let xhr = new XMLHttpRequest();
 
-                xhr.open('POST', 'modelos/funcionesdb.php',true)
+                xhr.open('POST', 'modelos/funcionesdb.php', true)
                 xhr.onload = function () {
-                    
-                    if (xhr.status == 200) {
-                       
-                       let respuestaJson = JSON.parse(xhr.response);
 
-                       console.log(respuestaJson);
-                       
-                        
-                    }else{
+                    if (xhr.status == 200) {
+
+                        let respuestaJson = JSON.parse(xhr.response);
+
+                        if (respuestaJson.estado == 'completado') {
+                            mostrarNotificacion(`<p> ${respuestaJson.estado}</p>`, 'correcto');
+                            document.querySelector('form').reset();
+                        }else{
+                            mostrarNotificacion(`${respuestaJson.contenido} error!!`, 'error')
+                        }
+
+                    } else {
+                        alert(`${xhr.status}: ${xhr.statusText}`)
+                    }
+
+                }
+
+                xhr.send(params)
+
+            }
+
+            function verificarUsuario(params) {
+
+                let xhr = new XMLHttpRequest();
+
+                xhr.open('POST', 'modelos/funcionesdb.php', true)
+                xhr.onload = function () {
+
+                    if (xhr.status == 200) {
+
+                        let respuestaJson = JSON.parse(xhr.response);
+
+
+
+                    } else {
                         alert(`${xhr.status}: ${xhr.statusText}`)
                     }
 
@@ -76,8 +102,10 @@
             }
 
 
-
         }
+
+
+
 
         //mostrar notificacion
         function mostrarNotificacion(texto, clase) {

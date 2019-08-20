@@ -30,7 +30,7 @@
                     <input type="submit" value=" <?php echo ($pagActual == 'createaccount')? 'crear usuario' : 'entrar'  ?> "  id="submit" class="inicio-sesion btn btn-amarillo">
                     <input type="hidden" value="<?php echo $pagActual; ?>" id="accion" >
                 <div class="btn-texto btn">
-                    <a href="#" class="create-account" >crea una nueva cuenta</a>
+                    <a href="<?php echo ($pagActual == 'createaccount')?  "login.php": "createaccount.php" ?> " class="create-account" ><?php echo ($pagActual == 'createaccount')?  "Ingresa a tu cuenta": "crea una nueva cuenta" ?></a>
                 </div>
             </div>
 
