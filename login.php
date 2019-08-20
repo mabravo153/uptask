@@ -5,6 +5,8 @@ if (isset($_GET['cerrarSesion'])) {
     $_SESSION = array(); //de esta forma borramos las variables de la sesion 
 }
 
+var_dump($_SESSION);
+
 include_once 'vistas/templates/header.php' ?>
 
 <?php include_once 'vistas/templates/formulario.php'  ?>

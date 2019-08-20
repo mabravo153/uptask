@@ -84,7 +84,7 @@ if (isset($_POST['accion'])) {
                 //iniciamos la sesion, es indispensable pasar los datos que queramos a la sesion
 
                 session_start();
-                $_SESSION['nombre'] = $usuario;
+                $_SESSION['nombreUsuario'] = $usuario;
                 $_SESSION['id'] = $idUsuario;
                 $_SESSION['login'] = true;
 

@@ -8,7 +8,7 @@ function usuarioAutenticado(){
 }
 
 function revisarUsuario(){
-   return isset ($_SESSION['nombreUsuario']);
+   return isset($_SESSION['nombreUsuario']);
 }
 
 session_start();
