@@ -78,8 +78,16 @@ if (isset($_POST['accion'])) {
             $busquedaUsuario->fetch(PDO::FETCH_ASSOC);
            
             //de eta manera verificamos si exisiste el usuario, en caso de existir, verfica el hash 
-            if ($nombreUsuario) {
+            if ($nombreUsuario) {  
                 if (password_verify($contrasenaSana, $contra)) {//de esta manera verificamos si el password que ingresa el usuario es el que se encuentra en la base de datos 
+                
+                //iniciamos la sesion, es indispensable pasar los datos que queramos a la sesion
+
+                session_start();
+                $_SESSION['nombre'] = $usuario;
+                $_SESSION['id'] = $idUsuario;
+                $_SESSION['login'] = true;
+
                     $resultadoLogin = array(
                         'resultado' => 'Login correcto',
                         'nombre' => $nombreUsuario

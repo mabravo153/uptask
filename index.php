@@ -1,19 +1,12 @@
-<?php include_once 'vistas/templates/header.php' ?>
+<?php
+ include_once 'modelos/sesion.php';
+ include_once 'vistas/templates/header.php'; 
+ include_once 'vistas/templates/barra.php';?>
 
-<div class="barra">
-    <div class="contenedor-encabezado">
-        <h1>Administrador de proyectos</h1>
-    </div>
-    <div class="alinear">
-        <div class="btn cerrar-sesion">
-            <a href="login.php" class="btn-cerrar">Cerrar Sesión</a>
-        </div>
-    </div>
-</div>
 
 
 <section class="seccion-principal">
-    <div class="proyectos ">
+    <div class="proyectos "> 
 
         <div class="contenedor">
             <div class="nuevo">
