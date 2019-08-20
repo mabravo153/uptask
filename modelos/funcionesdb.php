@@ -1,15 +1,15 @@
 <?php
 
-
+$usuario =  filter_var($_POST['usuario'], FILTER_SANITIZE_STRING);
+$contrasenaSana = filter_var( $_POST['contrasena'], FILTER_SANITIZE_STRING);
+$fechaCreacion = $_POST['fecha'];
 
 if (isset($_POST['accion'])) {
 
     //codigo para crear usuarios
     if ($_POST['accion'] == 'createaccount') {
 
-        $usuario = filter_var($_POST['usuario'], FILTER_SANITIZE_STRING);
-        $contrasenaSana = filter_var($_POST['contrasena'], FILTER_SANITIZE_STRING);
-        $fechaCreacion = $_POST['fecha'];
+       
 
         //crear un hash de contraseña 
         $opciones = array(
@@ -33,8 +33,7 @@ if (isset($_POST['accion'])) {
 
 
             $respuesta = array(
-                'estado' => 'completado',
-                'error' => $ingresarUsuario->errorInfo()
+                'estado' => 'completado'
             );
 
             $pdo->commit();
@@ -58,11 +57,6 @@ if (isset($_POST['accion'])) {
     //codigo para loguear usuarios 
     if ($_POST['accion'] == 'login') {
 
-
-        $usuario = filter_var($_POST['usuario'], FILTER_SANITIZE_STRING);
-        $contrasenaSana = filter_var($_POST['contrasena'], FILTER_SANITIZE_STRING);
-        $fechaCreacion = $_POST['fecha'];
-
         include_once 'bd-con.php';
 
         try {
@@ -70,7 +64,7 @@ if (isset($_POST['accion'])) {
             $pdo->beginTransaction(); //iniciamos transaccion 
 
             //realizar consulta
-            $busquedaUsuario = $pdo->prepare(" SELECT nombreUsuario, contrasena FROM usuario
+            $busquedaUsuario = $pdo->prepare(" SELECT id,nombreUsuario, contrasena FROM usuario
                                             WHERE nombreUsuario=:nombreUsuario ");
 
             $busquedaUsuario->bindParam(':nombreUsuario', $usuario);
@@ -78,9 +72,33 @@ if (isset($_POST['accion'])) {
 
 
             //loguear usuario 
+            $busquedaUsuario->bindColumn(1, $idUsuario); //vincula una columna a una variable, esta es la funcion que  reemplaza bind_result
+            $busquedaUsuario->bindColumn(2, $nombreUsuario);
+            $busquedaUsuario->bindColumn(3, $contra);
+            $busquedaUsuario->fetch(PDO::FETCH_ASSOC);
+           
+            //de eta manera verificamos si exisiste el usuario, en caso de existir, verfica el hash 
+            if ($nombreUsuario) {
+                if (password_verify($contrasenaSana, $contra)) {//de esta manera verificamos si el password que ingresa el usuario es el que se encuentra en la base de datos 
+                    $resultadoLogin = array(
+                        'resultado' => 'Login correcto',
+                        'nombre' => $nombreUsuario
+                    );
+                }else {
+                    $resultadoLogin = array(
+                        'resultado' => 'password incorrecto'
+                    );
+                }
+            }else {
+                $resultadoLogin = array(
+                    'resultado' => 'No existe ese nombre de usuario'
+                );
+            }
 
 
             $pdo->commit();
+            $busquedaUsuario = null;
+            $pdo = null;
         } catch (\Exception $th) {
             $pdo->rollBack();
 

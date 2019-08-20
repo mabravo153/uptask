@@ -264,7 +264,7 @@ input[type=password]:focus{
 
 .proyectos{
     background-color: var(--colorPrimario);
- 
+    min-width: 23rem;
 }
 
 .nuevo{

@@ -5,14 +5,16 @@
 
         //leer los datos del formulario 
 
-        let formulario = document.querySelector('#formulario');
+
         let contenedorTotal = document.querySelector('.contenedor-total');
 
 
-        //detectar cuando le den submit al formulario
-        formulario.addEventListener('submit', validarFormulario)
+        if (document.querySelector('#formulario')) {
+            //detectar cuando le den submit al formulario
+            let formulario = document.querySelector('#formulario');
+            formulario.addEventListener('submit', validarFormulario);
 
-
+        }
 
 
         function validarFormulario(e) {
@@ -64,7 +66,7 @@
                         if (respuestaJson.estado == 'completado') {
                             mostrarNotificacion(`<p> ${respuestaJson.estado}</p>`, 'correcto');
                             document.querySelector('form').reset();
-                        }else{
+                        } else {
                             mostrarNotificacion(`${respuestaJson.contenido} error!!`, 'error')
                         }
 
@@ -88,6 +90,16 @@
                     if (xhr.status == 200) {
 
                         let respuestaJson = JSON.parse(xhr.response);
+
+                        if (respuestaJson.resultado === "Login correcto") {
+                            mostrarNotificacion(`<p> ${respuestaJson.resultado} </p>`, 'correcto');
+                            setTimeout(() =>{
+                                window.location.href = "index.php"; //nos redirije a el index
+                            },2000);
+                           
+                        } else {
+                            mostrarNotificacion(`<p> ${respuestaJson.resultado} </p>`, 'error')
+                        }
 
 
 
