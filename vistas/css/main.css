@@ -345,6 +345,15 @@ input[type=password]:focus{
     justify-content: end;
 }
 
+.input-proyecto{
+    width: 100%;
+    padding: 2rem;
+    font-family: var(--fuenteGeneral);
+    font-size: 1.5 rem;
+    border-radius: .5rem;
+}
+
+
 /*NOTIFICACION*/ 
 
 .notificacion{
@@ -370,3 +379,4 @@ input[type=password]:focus{
     border: 0.1rem solid var(--rojoBorde);
     background-color: var(--rojoFondo);
 }
+

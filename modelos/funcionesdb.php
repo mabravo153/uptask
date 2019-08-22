@@ -1,7 +1,7 @@
 <?php
 
 $usuario =  filter_var($_POST['usuario'], FILTER_SANITIZE_STRING);
-$contrasenaSana = filter_var( $_POST['contrasena'], FILTER_SANITIZE_STRING);
+$contrasenaSana = filter_var($_POST['contrasena'], FILTER_SANITIZE_STRING);
 $fechaCreacion = $_POST['fecha'];
 
 if (isset($_POST['accion'])) {
@@ -9,7 +9,7 @@ if (isset($_POST['accion'])) {
     //codigo para crear usuarios
     if ($_POST['accion'] == 'createaccount') {
 
-       
+
 
         //crear un hash de contraseña 
         $opciones = array(
@@ -76,28 +76,28 @@ if (isset($_POST['accion'])) {
             $busquedaUsuario->bindColumn(2, $nombreUsuario);
             $busquedaUsuario->bindColumn(3, $contra);
             $busquedaUsuario->fetch(PDO::FETCH_ASSOC);
-           
-            //de eta manera verificamos si exisiste el usuario, en caso de existir, verfica el hash 
-            if ($nombreUsuario) {  
-                if (password_verify($contrasenaSana, $contra)) {//de esta manera verificamos si el password que ingresa el usuario es el que se encuentra en la base de datos 
-                
-                //iniciamos la sesion, es indispensable pasar los datos que queramos a la sesion
 
-                session_start();
-                $_SESSION['nombreUsuario'] = $usuario;
-                $_SESSION['id'] = $idUsuario;
-                $_SESSION['login'] = true;
+            //de eta manera verificamos si exisiste el usuario, en caso de existir, verfica el hash 
+            if ($nombreUsuario) {
+                if (password_verify($contrasenaSana, $contra)) { //de esta manera verificamos si el password que ingresa el usuario es el que se encuentra en la base de datos 
+
+                    //iniciamos la sesion, es indispensable pasar los datos que queramos a la sesion
+
+                    session_start();
+                    $_SESSION['nombreUsuario'] = $usuario;
+                    $_SESSION['id'] = $idUsuario;
+                    $_SESSION['login'] = true;
 
                     $resultadoLogin = array(
                         'resultado' => 'Login correcto',
                         'nombre' => $nombreUsuario
                     );
-                }else {
+                } else {
                     $resultadoLogin = array(
                         'resultado' => 'password incorrecto'
                     );
                 }
-            }else {
+            } else {
                 $resultadoLogin = array(
                     'resultado' => 'No existe ese nombre de usuario'
                 );
@@ -118,4 +118,6 @@ if (isset($_POST['accion'])) {
 
         echo json_encode($resultadoLogin);
     }
+
+   
 }
