@@ -16,6 +16,12 @@ if (isset($_POST['accion'])) {
         $insertarProyecto->bindParam(':nombre', $nombreProyecto);
         $insertarProyecto->execute();
 
+        
+
+        $respuestaProyeto = array(
+            'respuesta' => 'guardado'
+        );
+
         $pdo->commit();
 
     } catch (\Exception $th) {
@@ -24,6 +30,9 @@ if (isset($_POST['accion'])) {
             'respuesta' => $th->getMessage()
         );
     }
+
+    echo json_encode($respuestaProyeto);
+
 }
 
 

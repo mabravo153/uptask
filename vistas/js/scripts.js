@@ -21,11 +21,13 @@ scrollProyectos.setAttribute('id', 'scrollProyectos');
 
             //haremos que al precionar el clic, nos cree un elemento y lo incerte en el scroll 
 
+
+
+           
+
             //solicitar el nombre del proyecto
-            let nombreProyecto = document.createElement('a');
-            nombreProyecto.innerHTML = '<input type="text" id="nuevoProyecto" placeholder="Proyecto">';
-            nombreProyecto.classList.add('input-proyecto')
-            scrollProyectos.append(nombreProyecto);
+            let nombreProyecto = createElement('div', {id: 'contenedorModal', class: 'contenedorModal'})
+
 
 
             let nuevoProyecto = document.querySelector('#nuevoProyecto');
@@ -69,9 +71,7 @@ scrollProyectos.setAttribute('id', 'scrollProyectos');
                 xhr.send(envioProyectoNew);
 
                 //insertar elemento en el DOM
-                let insertarProyecto = document.createElement('a');
-                insertarProyecto.setAttribute('href', '#')
-                insertarProyecto.innerHTML = `<p>${nombreProyecto}</p>`;
+                let insertarProyecto = createElement('a',{id: 'insertarProyecto', class: '', href: '#'}, `<p>${nombreProyecto}</p>`);
                 scrollProyectos.prepend(insertarProyecto);
 
 
@@ -80,6 +80,69 @@ scrollProyectos.setAttribute('id', 'scrollProyectos');
         }
 
 
-    })
+        //funcion para crear elementos 
+        function createElement(element, atributos,contenido) {
+            let elementNuevo = document.createElement(element); 
 
+            if (contenido !== undefined) { 
+                
+                contenido.forEach(element => {
+                    if (element.nodeType) {
+                        
+                        if (element.nodeType === 1 ) {
+                            elementNuevo.append(element);
+                        }
+
+                    }else{
+                        elementNuevo.innerHTML += element
+                    }
+                });
+
+            }
+
+            insertarAtributos(elementNuevo,atributos)
+           
+            return elementNuevo
+        }
+
+
+        //insertar atributos 
+        function insertarAtributos(elemento, obj) {
+            let atributos = new Map(Object.entries(obj));
+
+            atributos.forEach((value, key, map) =>{
+               
+                if (atributos.has(key)) {
+                    
+                     elemento.setAttribute(`${key}`,`${value}` );
+  
+                  }
+
+            });
+
+        }
+
+        function crearVentanaModal (params) {
+            
+            let contenidoMod = createElement('div',{id: 'idcontenidoMod', class: 'contenido-modal'}, [params] )
+            let contenedorMod = createElement('div', {id: 'idcontenedorMod', class: 'contenedor-mod'}, [contenidoMod]);
+
+
+
+            document.body.append(contenedorMod);
+
+        }
+
+       
+            
+      
+       
+
+       
+
+     
+        
+       
+
+    })
 })();
