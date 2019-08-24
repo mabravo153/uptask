@@ -20,10 +20,14 @@ if (isset($_POST['accion'])) {
 
         
 
-        $respuestaProyeto = array(
-            'respuesta' => 'guardado'
-        );
-
+        if ($insertarProyecto->rowCount() !== 0) {
+            $respuestaProyeto = array(
+                'respuesta' => 'guardado', 
+                'id' => $pdo->lastInsertId(), //nos retorna el ultimo id insertado
+                'nombre' => $nombreProyecto
+            );
+        }
+       
         $pdo->commit(); 
 
         $insertarProyecto = null;

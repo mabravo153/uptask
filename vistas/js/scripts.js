@@ -10,9 +10,9 @@ scrollProyectos.setAttribute('id', 'scrollProyectos');
 
     document.addEventListener('DOMContentLoaded', function () {
 
-        
+
         /* FUNCIONES GENERALES*/
-        
+
         //funcion para crear elementos 
         function createElement(element, atributos, contenido) {
             let elementNuevo = document.createElement(element);
@@ -58,9 +58,22 @@ scrollProyectos.setAttribute('id', 'scrollProyectos');
         function crearVentanaModal(params) {
 
             let contenidoMod = createElement('div', { id: 'idcontenidoMod', class: 'contenido-modal' }, [params])
-            let contenedorMod = createElement('div', { id: 'idcontenedorMod', class: 'contenedor-mod' }, [contenidoMod]);
+            let contenedorMod = createElement('div', { id: 'idcontenedorMod', class: 'contenedor-mod' }, [contenidoMod]);//creamos los contenedores de la ventana 
 
-            document.body.append(contenedorMod);
+            document.body.append(contenedorMod); //la a gregamos al documento
+
+            function removerModal() {
+                contenedorMod.remove();
+            }
+
+            contenedorMod.addEventListener('click', (e) => {
+
+                if (e.target === contenedorMod) {//en caso que sea en el evento targen, removemos la ventana 
+
+                    removerModal();
+                }
+
+            })
 
         }
 
@@ -93,13 +106,13 @@ scrollProyectos.setAttribute('id', 'scrollProyectos');
                 let teclaPresionada = e.key;
 
                 if (teclaPresionada == 'Enter') {
-                  
+
                     crearProyecto(inputModal.value);
                     document.querySelector('#idcontenedorMod').remove();
                 }
-                
 
-            
+
+
             })
 
             //funcion para insertar elemento y hacer llamado a ajax 
@@ -121,7 +134,27 @@ scrollProyectos.setAttribute('id', 'scrollProyectos');
 
                 xhr.onload = function () {
                     if (xhr.status == 200) {
-                        console.log(xhr.response);
+                        let json = JSON.parse(xhr.response);
+
+                        if (json.respuesta == 'guardado') {
+
+                            crearVentanaModal(`<p> Proyecto ${json.respuesta}`)
+
+                            //insertar elemento en el DOM
+
+                            let contenedorProyectos = document.querySelector('#scrollProyectos');
+                            let parrafoProyecto = createElement('a', { href: `index.php?idProyecto=${json.id}`, id: `${json.nombre}` }, [`<p> ${inputModal.value} </p>`]);
+                            contenedorProyectos.prepend(parrafoProyecto);
+
+                            setTimeout(() =>{
+                                window.location.href = `index.php?idProyecto=${json.id}`;
+                            },1000);
+
+
+
+                        } else {
+                            crearVentanaModal(`<p> ${json.respuesta}`)
+                        }
 
                     } else {
                         alert(`${xhr.status}: ${xhr.statusText}`); //en caso que no cargue el sitio, el error 
@@ -130,14 +163,6 @@ scrollProyectos.setAttribute('id', 'scrollProyectos');
 
 
                 xhr.send(envioProyectoNew);
-
-                //insertar elemento en el DOM
-
-                let contenedorProyectos = document.querySelector('#scrollProyectos');
-                let parrafoProyecto = createElement('a', {href: '#'}, [`<p> ${inputModal.value} </p>`]);
-                contenedorProyectos.prepend(parrafoProyecto);
-                
-                
 
             }
 

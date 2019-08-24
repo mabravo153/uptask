@@ -90,7 +90,8 @@ if (isset($_POST['accion'])) {
 
                     $resultadoLogin = array(
                         'resultado' => 'Login correcto',
-                        'nombre' => $nombreUsuario
+                        'nombre' => $nombreUsuario,
+                        'id' => $pdo->lastInsertId()
                     );
                 } else {
                     $resultadoLogin = array(
