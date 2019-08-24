@@ -1,12 +1,13 @@
 <?php
- include_once 'modelos/sesion.php';
- include_once 'vistas/templates/header.php'; 
- include_once 'vistas/templates/barra.php';?>
+include_once 'modelos/sesion.php';
+include_once 'modelos/funciones.php';
+include_once 'vistas/templates/header.php';
+include_once 'vistas/templates/barra.php'; ?>
 
 
 
 <section class="seccion-principal">
-    <div class="proyectos "> 
+    <div class="proyectos ">
 
         <div class="contenedor">
             <div class="nuevo">
@@ -20,12 +21,20 @@
                 <h2 class="encabezado-proyectos">proyectos</h2>
 
                 <div class="scroll-proyectos">
-                    <a href="">
-                        <p>Diseño pagina web</p>
+
+                    <?php
+
+                    $respuesta = retornarNombrePro();
+
+                    foreach ($respuesta as $key => $value) { ?>
+
+                    <a href="index.php?idProyecto=<?php echo $value['idProyectos']; ?>">
+                        <p><?php echo $value['nombreProyecto']; ?></p>
                     </a>
-                    <a href="">
-                        <p>Diseño pagina web</p>
-                    </a>
+
+
+                    <?php } ?>
+
                 </div>
 
             </div>
@@ -40,10 +49,10 @@
                 <label for="tarea">Tarea</label>
                 <input type="text" name="nuevaTarea" id="nuevaTarea" placeholder="Nueva Tarea">
             </div>
-        <div class="flex-agregar">
-            <div class="btn btn-amarillo flex-agregar">
-                <a href="#" class="agregar">agregar</a>
-            </div>
+            <div class="flex-agregar">
+                <div class="btn btn-amarillo flex-agregar">
+                    <a href="#" class="agregar">agregar</a>
+                </div>
             </div>
         </div>
 
@@ -52,7 +61,7 @@
         <div class="listado-tareas">
             <h3>cambiar logo</h3>
             <div class="iconos">
-               <a href=""><i class="fas fa-trash"></i></a>   <a href=""><i class="fas fa-check-circle"></i></a>
+                <a href=""><i class="fas fa-trash"></i></a> <a href=""><i class="fas fa-check-circle"></i></a>
             </div>
         </div>
 

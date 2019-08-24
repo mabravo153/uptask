@@ -11,5 +11,25 @@ function obtenerPagActual(){
 }
 
 
+//retornar todos los valores de los proyectos 
+
+function retornarNombrePro(){
+    include_once 'bd-con.php';
+
+    try {
+
+        $funcionProyectos = $pdo->prepare( " SELECT idProyectos, nombreProyecto FROM proyectos ORDER BY fechaProyecto ASC " );
+        $funcionProyectos->execute();
+
+        return $funcionProyectos->fetchAll(PDO::FETCH_ASSOC);
+
+    } catch (\Exception $th) {
+        echo "Error!! {$th->getMessage()}";
+        return false;
+    }
+
+
+}
+
 
 ?>
