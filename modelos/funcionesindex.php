@@ -46,12 +46,31 @@ if (isset($_POST['accion'])) {
 
 if ($_POST['accion'] == 'insertarTarea') {
    
+    $nombreTarea = filter_var($_POST['nuevaTarea'], FILTER_SANITIZE_STRING);
+    $idOculto = (int) $_POST['idOculto'];
+
     include 'bd-con.php';
 
     try {
         
-        $insertarTarea = $pdo->prepare( "INSERT INTO tareas " )
+        $pdo->beginTransaction();
 
+        $insertarTarea = $pdo->prepare( "INSERT INTO tareas (nombreTarea, estadoTarea, fk_idProyectos) 
+                                         VALUES (:nombreTarea, :estadoTarea, :fk_idProyectos ) " );
+
+        $insertarTarea->execute([
+            ':nombreTarea' => $nombreTarea,
+            ':estadoTarea' => '0',
+            ':fk_idProyectos' => $idOculto
+        ]);
+
+        $respuestaTarea = array(
+            'respuesta' => 'correcto',
+            'idTarea' => $pdo->lastInsertId(),
+            'nombreTarea' => $nombreTarea
+        );
+
+        $pdo->commit();
 
     } catch (\Exception $th) {
         
@@ -61,6 +80,7 @@ if ($_POST['accion'] == 'insertarTarea') {
 
     }
 
+    echo json_encode($respuestaTarea);
 }
 
 

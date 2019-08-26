@@ -321,9 +321,14 @@ input[type=password]:focus{
     background-color: var(--colorPrimario);
     padding: 3rem;
     border-radius: 2rem;
+    overflow: scroll;
+}
+
+.contenedor-tareas{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     color: white;
+    margin: 1rem 0; 
 }
 
 .iconos{

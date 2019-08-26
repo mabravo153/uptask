@@ -187,7 +187,7 @@ scrollProyectos.setAttribute('id', 'scrollProyectos');
 
             if(inputNuevaTarea == "" || idOculto == ""){
                 
-                crearVentanaModal(`<p>Inserta Tarea </p>`);
+                crearVentanaModal(`<p>Inserta una Tarea </p>`);
                 
             }else{
                
@@ -200,27 +200,40 @@ scrollProyectos.setAttribute('id', 'scrollProyectos');
                     insertarTareaF(nuevaTarea);
                 }
 
-            }
+            }  
 
-            function insertarTareaF(params) {
+            async function insertarTareaF(params) {
                 
-                let xhr = new XMLHttpRequest();
+                let envioTarea = await fetch('modelos/funcionesindex.php', {method: 'POST', body: params});
 
-                xhr.open('POST', 'modelos/funcionesindex.php', true)
-
-                xhr.onload = () => {
-                    if (xhr.status == 200) {
-                        console.log(xhr.response);
+                if (envioTarea.ok) {
+                    let respuestaJson = await envioTarea.json();
+                    
+                    if (respuestaJson.respuesta == 'correcto') {
                         
+                        let listaTareas = document.querySelector('.listado-tareas')
+
+                        crearVentanaModal(`<p>La tarea: ${respuestaJson.nombreTarea} se añadio correctamente</p>`)
+
+                        let iconos =  createElement('div', {class: 'iconos'}, [`<a href="#"><i class="fas fa-trash"></i></a> <a href="#"><i class="fas fa-check-circle"></i></a>`])
+                        let contenedorTareas = createElement('div', {class: 'contenedor-tareas', id: `${respuestaJson.idTarea}`}, [`<h3>${respuestaJson.nombreTarea}</h3>`, iconos])
+
+                        listaTareas.append(contenedorTareas)
+
                     }else{
-                        alert(`${xhr.status}: ${xhr.statusText}`)
+                        crearVentanaModal(`<p>Ocurrio un error al agregar ${respuestaJson.nombreTarea}</p>`)
                     }
+                  
+                    
+
+                }else{
+                    alert(`${envioTarea.status}: ${envioTarea.statusText}`)
                 }
 
-                xhr.send(params)
-
-
             }
+
+           
+
 
         });
 

@@ -30,7 +30,7 @@ if (isset($_GET['idProyecto'])) {
                 <div class="scroll-proyectos">
 
                     <?php
-                    
+
                     $respuesta = retornarNombrePro();
 
                     foreach ($respuesta as $key => $value) { ?>
@@ -54,11 +54,11 @@ if (isset($_GET['idProyecto'])) {
 
         if ($idProyectoActual) {
             $obtenerNombreActual = mostrarNombreActual($idProyectoActual);
-        
-        ?>
-        <h2 class="centrar-texto"><?php echo $obtenerNombreActual['nombreProyecto']?> </h2>
-        
-       
+
+            ?>
+        <h2 class="centrar-texto"><?php echo $obtenerNombreActual['nombreProyecto'] ?> </h2>
+
+
 
         <div class="agregar-tarea">
             <div class="campo">
@@ -67,7 +67,7 @@ if (isset($_GET['idProyecto'])) {
             </div>
             <div class="flex-agregar">
                 <div class="btn btn-amarillo flex-agregar">
-                    <a href="#" class="agregar" id="agregarTarea" >agregar</a>
+                    <a href="#" class="agregar" id="agregarTarea">agregar</a>
                     <input type="hidden" id="idPro" value="<?php echo $idProyectoActual; ?>">
                     <input type="hidden" id="insertarTarea" value="insertarTarea">
                 </div>
@@ -77,13 +77,15 @@ if (isset($_GET['idProyecto'])) {
         <h2 class="centrar-texto">listado tareas</h2>
 
         <div class="listado-tareas">
-            <h3>cambiar logo</h3>
-            <div class="iconos">
-                <a href=""><i class="fas fa-trash"></i></a> <a href=""><i class="fas fa-check-circle"></i></a>
+            <div class="contenedor-tareas">
+                <h3>cambiar logo</h3>
+                <div class="iconos">
+                    <a href="#"><i class="fas fa-trash"></i></a> <a href="#"><i class="fas fa-check-circle"></i></a>
+                </div>
             </div>
         </div>
 
-        <?php  }else {
+        <?php  } else {
             echo "<p>Elige o crea un Proyecto</p>";
         } ?>
 
