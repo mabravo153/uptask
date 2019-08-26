@@ -44,7 +44,25 @@ if (isset($_POST['accion'])) {
 
 }
 
- 
+if ($_POST['accion'] == 'insertarTarea') {
+   
+    include 'bd-con.php';
+
+    try {
+        
+        $insertarTarea = $pdo->prepare( "INSERT INTO tareas " )
+
+
+    } catch (\Exception $th) {
+        
+        $respuestaTarea = array(
+            'respuesta' => $th->getMessage()
+        );
+
+    }
+
+}
+
 
 }
 

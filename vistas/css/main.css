@@ -285,6 +285,7 @@ input[type=password]:focus{
 
 .scroll-proyectos{
     margin-top: 2rem;
+    overflow: scroll;
 }
 
 .scroll-proyectos a p{

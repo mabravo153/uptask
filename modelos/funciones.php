@@ -14,7 +14,7 @@ function obtenerPagActual(){
 //retornar todos los valores de los proyectos 
 
 function retornarNombrePro(){
-    include_once 'bd-con.php';
+    include 'bd-con.php';
 
     try {
 
@@ -25,11 +25,26 @@ function retornarNombrePro(){
 
     } catch (\Exception $th) {
         echo "Error!! {$th->getMessage()}";
-        return false;
+        return false; 
     }
-
 
 }
 
+function mostrarNombreActual($var = null){
+    include 'bd-con.php';
+
+    try {
+
+        $funcionProyectos = $pdo->prepare( " SELECT idProyectos, nombreProyecto FROM proyectos WHERE idProyectos = {$var} " );
+        $funcionProyectos->execute();
+
+        return $funcionProyectos->fetch(PDO::FETCH_ASSOC);
+
+    } catch (\Exception $th) {
+        echo "Error!! {$th->getMessage()}";
+        return false; 
+    }
+
+}
 
 ?>

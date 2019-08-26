@@ -82,6 +82,8 @@ scrollProyectos.setAttribute('id', 'scrollProyectos');
 
         /*MANUPULAR EL DOM */
 
+
+        //crear proyecto nuevo 
         let nuevoProyectos = document.querySelector('#botonProyecto')
 
         nuevoProyectos.addEventListener('click', nuevoProyecto);
@@ -146,9 +148,9 @@ scrollProyectos.setAttribute('id', 'scrollProyectos');
                             let parrafoProyecto = createElement('a', { href: `index.php?idProyecto=${json.id}`, id: `${json.nombre}` }, [`<p> ${inputModal.value} </p>`]);
                             contenedorProyectos.prepend(parrafoProyecto);
 
-                            setTimeout(() =>{
+                            setTimeout(() => {
                                 window.location.href = `index.php?idProyecto=${json.id}`;
-                            },1000);
+                            }, 1000);
 
 
 
@@ -168,6 +170,59 @@ scrollProyectos.setAttribute('id', 'scrollProyectos');
 
         }
 
+
+
+        //crear tarea 
+
+        let agregarTarea = document.querySelector('#agregarTarea');
+
+        agregarTarea.addEventListener('click', (e) => {
+            e.preventDefault()
+
+            let inputNuevaTarea = document.querySelector('#nuevaTarea').value;
+            let idOculto = document.querySelector('#idPro').value;
+            let insertarTarea = document.querySelector('#insertarTarea').value
+
+           
+
+            if(inputNuevaTarea == "" || idOculto == ""){
+                
+                crearVentanaModal(`<p>Inserta Tarea </p>`);
+                
+            }else{
+               
+                let nuevaTarea = new FormData()
+                nuevaTarea.append('nuevaTarea', inputNuevaTarea);
+                nuevaTarea.append('idOculto', idOculto); 
+                nuevaTarea.append('accion', insertarTarea) 
+              
+                if(insertarTarea == 'insertarTarea'){
+                    insertarTareaF(nuevaTarea);
+                }
+
+            }
+
+            function insertarTareaF(params) {
+                
+                let xhr = new XMLHttpRequest();
+
+                xhr.open('POST', 'modelos/funcionesindex.php', true)
+
+                xhr.onload = () => {
+                    if (xhr.status == 200) {
+                        console.log(xhr.response);
+                        
+                    }else{
+                        alert(`${xhr.status}: ${xhr.statusText}`)
+                    }
+                }
+
+                xhr.send(params)
+
+
+            }
+
+        });
 
 
     })
