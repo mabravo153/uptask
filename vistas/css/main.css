@@ -422,3 +422,20 @@ input[type=password]:focus{
 .completo{
     color: var(--bordeFondo) !important; 
 }
+
+/* BARRA */
+
+.contenedor-barra{
+    position: fixed;
+    height: 1rem;
+    top: 0;
+    left: 0;
+    width: 100%;
+    border: 0.1rem solid var(--bordeFondo)
+}
+
+.contenido-barra{
+    width: 50%;
+    background-color:white;
+    height: 100%
+}
