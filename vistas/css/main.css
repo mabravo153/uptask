@@ -317,7 +317,9 @@ input[type=password]:focus{
 }
 
 .listado-tareas{
-    min-width: 70rem;
+    max-width: 70rem;
+    min-width: 69rem;
+    max-height: 25rem;
     background-color: var(--colorPrimario);
     padding: 3rem;
     border-radius: 2rem;
@@ -413,4 +415,10 @@ input[type=password]:focus{
     padding: 1rem ;
     font-size: 1.5rem;
     font-family: var(--fuenteGeneral);
+}
+
+/*COMPLETO */   
+
+.completo{
+    color: var(--bordeFondo) !important; 
 }

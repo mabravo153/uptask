@@ -47,34 +47,15 @@ function mostrarNombreActual($var = null){
 
 }
 
-
-
-function retornarNombrePro(){
-    include 'bd-con.php';
-
-    try {
-
-        $funcionProyectos = $pdo->prepare( " SELECT idProyectos, nombreProyecto FROM proyectos ORDER BY fechaProyecto ASC " );
-        $funcionProyectos->execute();
-
-        return $funcionProyectos->fetchAll(PDO::FETCH_ASSOC);
-
-    } catch (\Exception $th) {
-        echo "Error!! {$th->getMessage()}";
-        return false; 
-    }
-
-}
-
 function mostrarTareas($var = null){
     include 'bd-con.php';
 
     try {
 
-        $funcionProyectos = $pdo->prepare( " SELECT idProyectos, nombreProyecto FROM proyectos WHERE idProyectos = {$var} " );
+        $funcionProyectos = $pdo->prepare( " SELECT idTarea, nombreTarea, estadoTarea FROM tareas WHERE fk_idProyectos = {$var} " );
         $funcionProyectos->execute();
 
-        return $funcionProyectos->fetch(PDO::FETCH_ASSOC);
+        return $funcionProyectos->fetchAll(PDO::FETCH_ASSOC);
 
     } catch (\Exception $th) {
         echo "Error!! {$th->getMessage()}";

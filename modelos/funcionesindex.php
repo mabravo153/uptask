@@ -83,6 +83,37 @@ if ($_POST['accion'] == 'insertarTarea') {
     echo json_encode($respuestaTarea);
 }
 
+if ($_POST['accion'] == 'actualizarEstado') {
+   
+    $idTareaModificada = $_POST['idTareaModificada'];
+
+    include 'bd-con.php';
+
+    try {
+        
+        $pdo->beginTransaction();
+        $actualizarEstado = $pdo->prepare( " DELETE FROM tareas WHERE idTarea=:idTareaModificada ");
+        $actualizarEstado->bindParam(':idTareaModificada', $idTareaModificada);
+      
+        $actualizarEstado->execute();
+
+        $respuestaActualizar = array(
+            'respuesta' => 'correcto'
+        );
+
+        $pdo->commit();
+        $actualizarEstado = null; 
+        $pdo = null;
+
+    } catch (\Exception $th) {
+        $respuestaActualizar = array(
+            'error' => $th->getMessage()
+        );
+    }
+
+    echo json_encode($respuestaActualizar);
+
+}
 
 }
 

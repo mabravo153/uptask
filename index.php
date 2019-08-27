@@ -77,12 +77,23 @@ if (isset($_GET['idProyecto'])) {
         <h2 class="centrar-texto">listado tareas</h2>
 
         <div class="listado-tareas">
-            <div class="contenedor-tareas">
-                <h3>cambiar logo</h3>
+        
+        <?php  
+        
+        $tareas = mostrarTareas($idProyectoActual);
+
+        foreach ($tareas as $key => $tarea) { ?>
+           
+           <div class="contenedor-tareas" id="<?php echo $tarea['idTarea']; ?>" >
+                <h3><?php echo $tarea['nombreTarea'] ?></h3>
                 <div class="iconos">
-                    <a href="#"><i class="fas fa-trash"></i></a> <a href="#"><i class="fas fa-check-circle"></i></a>
+                    </a> <a href="#" id="completado" ><i class="fas fa-check-circle"></i></a>
                 </div>
             </div>
+
+        <?php }?>
+
+            
         </div>
 
         <?php  } else {

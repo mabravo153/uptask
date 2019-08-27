@@ -183,60 +183,92 @@ scrollProyectos.setAttribute('id', 'scrollProyectos');
             let idOculto = document.querySelector('#idPro').value;
             let insertarTarea = document.querySelector('#insertarTarea').value
 
-           
 
-            if(inputNuevaTarea == "" || idOculto == ""){
-                
+
+            if (inputNuevaTarea == "" || idOculto == "") {
+
                 crearVentanaModal(`<p>Inserta una Tarea </p>`);
-                
-            }else{
-               
+
+            } else {
+
                 let nuevaTarea = new FormData()
                 nuevaTarea.append('nuevaTarea', inputNuevaTarea);
-                nuevaTarea.append('idOculto', idOculto); 
-                nuevaTarea.append('accion', insertarTarea) 
-              
-                if(insertarTarea == 'insertarTarea'){
+                nuevaTarea.append('idOculto', idOculto);
+                nuevaTarea.append('accion', insertarTarea)
+
+                if (insertarTarea == 'insertarTarea') {
                     insertarTareaF(nuevaTarea);
                 }
 
-            }  
+            }
 
             async function insertarTareaF(params) {
-                
-                let envioTarea = await fetch('modelos/funcionesindex.php', {method: 'POST', body: params});
+
+                let envioTarea = await fetch('modelos/funcionesindex.php', { method: 'POST', body: params });
 
                 if (envioTarea.ok) {
                     let respuestaJson = await envioTarea.json();
-                    
+
                     if (respuestaJson.respuesta == 'correcto') {
-                        
+
                         let listaTareas = document.querySelector('.listado-tareas')
 
                         crearVentanaModal(`<p>La tarea: ${respuestaJson.nombreTarea} se añadio correctamente</p>`)
 
-                        let iconos =  createElement('div', {class: 'iconos'}, [`<a href="#"><i class="fas fa-trash"></i></a> <a href="#"><i class="fas fa-check-circle"></i></a>`])
-                        let contenedorTareas = createElement('div', {class: 'contenedor-tareas', id: `${respuestaJson.idTarea}`}, [`<h3>${respuestaJson.nombreTarea}</h3>`, iconos])
+                        let iconos = createElement('div', { class: 'iconos' }, [`<a href="#"><i class="fas fa-trash"></i></a> <a href="#"><i class="fas fa-check-circle"></i></a>`])
+                        let contenedorTareas = createElement('div', { class: 'contenedor-tareas', id: `${respuestaJson.idTarea}` }, [`<h3>${respuestaJson.nombreTarea}</h3>`, iconos])
 
                         listaTareas.append(contenedorTareas)
 
-                    }else{
+                    } else {
                         crearVentanaModal(`<p>Ocurrio un error al agregar ${respuestaJson.nombreTarea}</p>`)
                     }
-                  
-                    
 
-                }else{
+
+
+                } else {
                     alert(`${envioTarea.status}: ${envioTarea.statusText}`)
                 }
 
             }
 
-           
+        });//crear tarea 
 
 
-        });
+        //asignar el progreso  y eliminar las tareas 
 
+        let listadoTarea = document.querySelector('.listado-tareas')
+
+        listadoTarea.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            //completar tarea y eliminarla del DOM
+            if (e.target.classList.contains('fa-check-circle')) {
+
+                actualizarEstado(e.target)
+
+            }
+
+            async function actualizarEstado(elementoTarget) {
+                let elementoContenedor = elementoTarget.parentElement.parentElement.parentElement
+                let idElementoContenedor = elementoContenedor.getAttribute('id');
+
+                let actualizarEstado = new FormData()
+                actualizarEstado.append('idTareaModificada', idElementoContenedor)
+                actualizarEstado.append('accion', 'actualizarEstado')
+
+
+                let updateState = await fetch('modelos/funcionesindex.php', { method: 'POST', body: actualizarEstado })
+
+                if (updateState.ok) {
+                    let respuestaState = await updateState.json()
+                    if (respuestaState.respuesta == 'correcto') {
+                        elementoContenedor.remove();
+                    }
+                }
+            }
+
+        })
 
     })
 })();
